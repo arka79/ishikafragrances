@@ -1,11 +1,9 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { cloudflare } from '@cloudflare/vite-plugin';
 import { fileURLToPath, URL } from 'node:url';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
 
-// The admin page is served at /admin in both dev and production.
 const adminRoute = () => ({
   name: 'admin-route',
   configureServer(server) {
@@ -19,7 +17,7 @@ const adminRoute = () => ({
 });
 
 export default defineConfig({
-  plugins: [react(), cloudflare(), adminRoute()],
+  plugins: [react(), adminRoute()],
   build: {
     rollupOptions: {
       input: {
