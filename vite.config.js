@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { cloudflare } from '@cloudflare/vite-plugin';
 import { fileURLToPath, URL } from 'node:url';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
@@ -18,7 +19,7 @@ const adminRoute = () => ({
 });
 
 export default defineConfig({
-  plugins: [react(), adminRoute()],
+  plugins: [react(), cloudflare(), adminRoute()],
   build: {
     rollupOptions: {
       input: {

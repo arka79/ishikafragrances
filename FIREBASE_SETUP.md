@@ -82,6 +82,13 @@ document over HTTPS, so visitors download no SDK.
 3. Deploy. `vercel.json` maps `/admin` to `admin.html`, sets a strict CSP and
    security headers, and caches hashed assets.
 4. Optional hardening: in Google Cloud → **APIs & Services → Credentials**,
-   restrict the browser API key to your Vercel domain (and
+   restrict the browser API key to your live domain (and
    `http://localhost:5173/*` for local dev). Restricting the key does not
    replace the Firestore rules — it only limits quota abuse.
+
+Vercel's **Hobby plan is non-commercial only**; a client's business site needs
+Pro. For a free commercial deployment use **Cloudflare Pages** (commercial use
+allowed, static requests unlimited, 500 builds/month) or Netlify Free
+(commercial use allowed, but a 300-credit budget pauses sites when exhausted).
+Both read `public/_redirects` and `public/_headers`; use build command
+`npm run build` and output directory `dist`, with the same environment vars.
