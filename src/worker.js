@@ -4,13 +4,18 @@ export default {
     const path = url.pathname;
 
     if (path === '/admin' || path === '/admin/') {
-      return env.ASSETS.fetch(new URL('/admin.html', request.url), request);
+      const res = await env.ASSETS.fetch(new URL('/admin.html', request.url));
+      const html = await res.text();
+      return new Response(html, {
+        status: 200,
+        headers: { 'content-type': 'text/html; charset=utf-8' },
+      });
     }
 
     try {
       return await env.ASSETS.fetch(request);
     } catch {
-      return env.ASSETS.fetch(new URL('/index.html', request.url), request);
+      return env.ASSETS.fetch(new URL('/index.html', request.url));
     }
   },
 };
