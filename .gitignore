@@ -1,0 +1,18 @@
+# Dependencies and build output
+node_modules/
+dist/
+.vercel/
+
+# Local secrets — never commit these.
+.env
+.env.local
+.env.*
+!.env.example
+
+# Editor and OS noise
+.DS_Store
+.vscode/
+
+# Firebase CLI output
+.firebase/
+firebase-debug.log*

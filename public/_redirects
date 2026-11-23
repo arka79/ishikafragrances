@@ -1,0 +1,3 @@
+# Netlify / Cloudflare Pages redirect rules (other hosts ignore this file).
+# The admin page is still reachable directly at /admin.html everywhere.
+/admin  /admin.html  200

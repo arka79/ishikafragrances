@@ -1,0 +1,34 @@
+rules_version = '2';
+
+// Catalogue security:
+//   - Anyone may READ the price list (it is public information).
+//   - Only the single owner account may WRITE it.
+// The owner is identified by the email stored in site/config.adminEmail.
+// Because client reads of site/config are denied, that address is not exposed.
+// Any other signed-in account (for example a sign-up, if sign-ups are left on)
+// is refused by the rules, not just by the admin UI.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isOwner() {
+      return request.auth != null
+        && request.auth.token.email == get(/databases/$(database)/documents/site/config).data.adminEmail;
+    }
+
+    // The live catalogue: one document holding every product.
+    match /site/catalogue {
+      allow read: if true;
+      allow write: if isOwner()
+        && request.resource.data.keys().hasOnly(['products', 'updatedAt'])
+        && request.resource.data.products is list
+        && request.resource.data.products.size() > 0
+        && request.resource.data.products.size() <= 1000;
+    }
+
+    // Owner marker. Written once from the Firebase console, never from the app.
+    match /site/config {
+      allow read, write: if false;
+    }
+  }
+}
